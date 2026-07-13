@@ -119,9 +119,8 @@ function Hero() {
       </div>
       {/* Center Content */}
       <div className="relative z-10 max-w-[1280px] mx-auto px-6 flex flex-col items-center text-center">
-        {/* We use black bg image with mix-blend-mode: screen to blend perfectly */}
-        <div className="relative w-[min(80vw,520px)] aspect-square bg-black rounded-full overflow-hidden border border-black shadow-inner">
-          <Image src="/hero-pizza.png" alt="Casa Presto Hero Pizza" fill className="object-cover blend-screen" priority sizes="(max-width:768px) 80vw, 520px" />
+        <div className="relative w-[min(80vw,520px)] aspect-square">
+          <Image src="/hero-pizza.png" alt="Casa Presto Hero Pizza" fill className="object-contain drop-shadow-2xl" priority sizes="(max-width:768px) 80vw, 520px" />
         </div>
         <a href="#menu" className="btn-primary px-10 py-4 text-sm mt-6">Explorer le Menu</a>
       </div>
