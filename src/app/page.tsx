@@ -120,7 +120,7 @@ function Hero() {
       {/* Center Content */}
       <div className="relative z-10 max-w-[1280px] mx-auto px-6 flex flex-col items-center text-center">
         <div className="relative w-[min(80vw,520px)] aspect-square">
-          <Image src="/hero-pizza.png" alt="Casa Presto Hero Pizza" fill className="object-contain blend-screen" priority sizes="(max-width:768px) 80vw, 520px" />
+          <Image src="/hero-pizza.png" alt="Casa Presto Hero Pizza" fill className="object-contain drop-shadow-2xl" priority sizes="(max-width:768px) 80vw, 520px" />
         </div>
         <a href="#menu" className="btn-primary px-10 py-4 text-sm mt-6">Explorer le Menu</a>
       </div>
