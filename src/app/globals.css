@@ -3,19 +3,18 @@
 
 @theme inline {
   --color-bg: #FFFFFF;
-  --color-bg-alt: #F9F9F9;
+  --color-bg-alt: #FAFAFA;
   --color-primary: #F37021;
   --color-primary-dark: #D15B17;
   --color-primary-light: #F7945A;
   --color-accent-green: #4CAF50;
   --color-gold: #D4A030;
-  --color-dark: #1A1A1A;
-  --color-dark-soft: #2D2D2D;
-  --color-text: #1A1A1A;
-  --color-text-muted: #666666;
-  --font-display: "Poppins", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
-  --font-hand: "Just Another Hand", cursive;
+  --color-dark: #0A0A0A;
+  --color-dark-soft: #141414;
+  --color-text: #171717;
+  --color-text-muted: #737373;
+  --font-display: "Outfit", system-ui, sans-serif;
+  --font-body: "Plus Jakarta Sans", system-ui, sans-serif;
 }
 
 ::-webkit-scrollbar { width: 6px; }
@@ -109,4 +108,25 @@
 .text-stroke-primary {
   -webkit-text-stroke: 2px var(--color-primary);
   -webkit-text-fill-color: transparent;
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+  .glass-dark {
+    background: rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  .shadow-premium {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 20px 25px -5px rgba(0, 0, 0, 0.02);
+  }
+  .shadow-glow {
+    box-shadow: 0 0 20px rgba(243, 112, 33, 0.3);
+  }
 }
