@@ -131,9 +131,11 @@ function Navbar({ onOpenCart, cartCount }: { onOpenCart: () => void; cartCount: 
   return (
     <header className={`sticky top-0 z-45 transition-all duration-300 ${scrolled ? "bg-bg/95 backdrop-blur-md shadow-lg" : "bg-bg"}`}>
       <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between h-[80px]">
-        <a href="#" className="font-display text-[32px] font-extrabold text-primary italic flex items-center gap-2 tracking-tighter">
-          <span className="text-3xl">🍕</span>
-          CASA PRESTO
+        <a href="#" className="flex items-center gap-3">
+          <div className="relative w-12 h-12 rounded-full overflow-hidden border border-gray-100 shadow-sm shrink-0">
+            <Image src="/logo.jpg" alt="Casa Presto Logo" fill className="object-cover" />
+          </div>
+          <span className="font-display text-[26px] font-black text-primary italic tracking-tighter leading-none">CASA PRESTO</span>
         </a>
         <nav className="hidden md:flex items-center gap-8">
           {[
@@ -891,7 +893,12 @@ function Footer() {
       <div className="max-w-[1280px] mx-auto px-6">
         <div className="grid md:grid-cols-3 gap-12 border-b border-white/10 pb-16">
           <div>
-            <div className="font-display text-3xl font-black text-primary italic mb-6">Casa Presto</div>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="relative w-12 h-12 rounded-full overflow-hidden border border-white/10 shadow-sm shrink-0">
+                <Image src="/logo.jpg" alt="Casa Presto Logo" fill className="object-cover" />
+              </div>
+              <span className="font-display text-2xl font-black text-primary italic tracking-tighter">CASA PRESTO</span>
+            </div>
             <p className="text-white/60 text-sm leading-relaxed max-w-sm">
               La meilleure pizzeria de Djerba. Ingrédients frais, pâte faite maison et livraison silencieuse écologique.
             </p>
