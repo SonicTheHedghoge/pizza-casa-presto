@@ -2,6 +2,15 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
+/* ─── Types ─── */
+interface CartItem {
+  id: string; // name + size (if applicable)
+  name: string;
+  price: number;
+  size?: string;
+  quantity: number;
+}
+
 /* ─── Scroll Reveal Hook ─── */
 function useReveal(threshold = 0.1) {
   const ref = useRef<HTMLDivElement>(null);
@@ -50,34 +59,34 @@ const TEX_MEX = [
 ];
 
 const TEX_MEX_SIDES = [
-  { name: "Frites Maison", desc: "Portion généreuse de frites dorées", p: 4.0 },
-  { name: "Frites Cheddar", desc: "Frites croustillantes nappées de cheddar fondu chaud", p: 5.0 },
+  { name: "Frites Maison", desc: "Portion de frites dorées", p: 4.0 },
+  { name: "Frites Cheddar", desc: "Frites croustillantes avec cheddar fondu", p: 5.0 },
 ];
 
 const ZAPWICH = [
-  { name: "Zapwich Original", desc: "Pain à pizza farci de fromage fondant et viandes au choix (Viande Hachée, Merguez, Poulet, Saumon) ou 4 Fromages, servi chaud avec frites croustillantes", p: 8.5 },
+  { name: "Zapwich Original", desc: "Pain à pizza farci de fromage fondant et viandes au choix (Viande Hachée, Merguez, Poulet, Saumon) ou 4 Fromages, avec frites", p: 8.5 },
 ];
 
 const SALADES = [
   { name: "Exotique", desc: "Salade verte, tomates fraîches, maïs doux, crevettes marinées", p: 6.5 },
   { name: "Antillais", desc: "Salade verte, tomates fraîches, jambon, ananas, maïs", p: 6.5 },
-  { name: "Chef", desc: "Salade verte, tomates fraîches, gruyère, jambon, cornichons croquants, maïs", p: 6.5 },
+  { name: "Chef", desc: "Salade verte, tomates fraîches, gruyère, jambon, cornichons, maïs", p: 6.5 },
   { name: "Italienne", desc: "Salade verte, tomates fraîches, poivrons doux, olives, anchois salés, gruyère", p: 6.5 },
   { name: "Niçoise", desc: "Salade verte, tomates fraîches, pommes de terre, thon, olives, œuf dur", p: 6.5 },
-  { name: "Royale", desc: "Salade verte, tomates fraîches, filet de poulet, croûtons dorés, chèvre chaud fondant", p: 6.5 },
-  { name: "Norvégienne", desc: "Salade verte, tomates fraîches, saumon fumé délicat, crème fraîche citronnée", p: 6.5 },
-  { name: "Grecque au Surimi", desc: "Salade verte, tomates, concombre, surimi de crabe, poivrons, oignons, feta, huile d'olive vierge, origan sauvage, citron", p: 9.9 },
+  { name: "Royale", desc: "Salade verte, tomates fraîches, filet de poulet, croûtons, chèvre chaud fondant", p: 6.5 },
+  { name: "Norvégienne", desc: "Salade verte, tomates fraîches, saumon fumé, crème fraîche citronnée", p: 6.5 },
+  { name: "Grecque au Surimi", desc: "Salade verte, tomates, concombre, surimi, poivrons, oignons, feta, origan, citron", p: 9.9 },
 ];
 
 const FORMULES = [
-  { name: "Menu Midi", desc: "1 Pizza Junior au choix + 1 Boisson fraîche + 1 Dessert Grec traditionnel", p: 10.5, type: "Midi" },
-  { name: "Kid Box", desc: "4 Nuggets croustillants + Frites dorées + 1 Boisson + 1 Surprise amusante", p: 6.9, type: "Kid" },
+  { name: "Menu Midi", desc: "1 Pizza Junior au choix + 1 Boisson fraîche + 1 Dessert Grec", p: 10.5, type: "Midi" },
+  { name: "Kid Box", desc: "4 Nuggets + Frites + 1 Boisson + 1 Surprise", p: 6.9, type: "Kid" },
 ];
 
 const DESSERTS = [
   { name: "Tiramisu Maison", desc: "Café ou Chocolat", p: 4.9 },
-  { name: "Mousse au Chocolat", desc: "Onctueuse et intense", p: 4.9 },
-  { name: "Dessert Grec", desc: "Saveurs douces méditerranéennes", p: 4.9 },
+  { name: "Mousse au Chocolat", desc: "Onctueuse", p: 4.9 },
+  { name: "Dessert Grec", desc: "Saveurs méditerranéennes", p: 4.9 },
 ];
 
 const BOISSONS = [
@@ -105,13 +114,13 @@ const DROP_TAGS = [
 
 function Topbar() {
   return (
-    <div className="bg-primary text-white text-center py-2.5 text-sm font-display font-medium tracking-wide z-50 relative">
+    <div className="bg-primary text-white text-center py-2.5 text-sm font-display font-medium tracking-wide z-40 relative">
       LIVRAISON GRATUITE SUR TOUTE L&apos;ÎLE DE DJERBA 🛵 75 655 169
     </div>
   );
 }
 
-function Navbar() {
+function Navbar({ onOpenCart, cartCount }: { onOpenCart: () => void; cartCount: number }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -120,7 +129,7 @@ function Navbar() {
     return () => window.removeEventListener("scroll", h);
   }, []);
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? "bg-bg/95 backdrop-blur-md shadow-lg" : "bg-bg"}`}>
+    <header className={`sticky top-0 z-45 transition-all duration-300 ${scrolled ? "bg-bg/95 backdrop-blur-md shadow-lg" : "bg-bg"}`}>
       <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between h-[80px]">
         <a href="#" className="font-display text-[32px] font-extrabold text-primary italic flex items-center gap-2 tracking-tighter">
           <span className="text-3xl">🍕</span>
@@ -142,13 +151,30 @@ function Navbar() {
           <a href="tel:75655169" className="font-display font-black text-xl hover:text-primary transition-colors flex items-center gap-2">
             <span>📞</span> 75 655 169
           </a>
-          <a href="#menu" className="btn-primary px-8 py-3.5 text-xs shadow-md shadow-primary/30">Commander</a>
+          <button onClick={onOpenCart} className="relative btn-primary px-6 py-3.5 text-xs shadow-md shadow-primary/30 flex items-center gap-2">
+            <span>🛒 Panier</span>
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-600 border-2 border-white text-white font-black text-[10px] w-6 h-6 rounded-full flex items-center justify-center animate-bounce">
+                {cartCount}
+              </span>
+            )}
+          </button>
         </div>
-        <button onClick={() => setOpen(!open)} className="md:hidden w-8 h-8 flex flex-col justify-center gap-1.5" aria-label="Menu">
-          <span className={`block h-0.5 w-full bg-dark transition-all ${open ? "rotate-45 translate-y-2" : ""}`} />
-          <span className={`block h-0.5 w-full bg-primary transition-all ${open ? "opacity-0" : ""}`} />
-          <span className={`block h-0.5 w-full bg-dark transition-all ${open ? "-rotate-45 -translate-y-2" : ""}`} />
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          <button onClick={onOpenCart} className="relative p-2 text-dark" aria-label="Cart">
+            <span className="text-2xl">🛒</span>
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-600 text-white font-black text-[9px] w-5 h-5 rounded-full flex items-center justify-center">
+                {cartCount}
+              </span>
+            )}
+          </button>
+          <button onClick={() => setOpen(!open)} className="w-8 h-8 flex flex-col justify-center gap-1.5" aria-label="Menu">
+            <span className={`block h-0.5 w-full bg-dark transition-all ${open ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block h-0.5 w-full bg-primary transition-all ${open ? "opacity-0" : ""}`} />
+            <span className={`block h-0.5 w-full bg-dark transition-all ${open ? "-rotate-45 -translate-y-2" : ""}`} />
+          </button>
+        </div>
       </div>
       {open && (
         <div className="md:hidden bg-bg border-t border-bg-alt px-6 pb-8 space-y-4 pt-4 shadow-inner">
@@ -212,7 +238,7 @@ function Hero() {
       {/* Center Hero Content */}
       <div className="relative z-10 max-w-[1280px] mx-auto px-6 w-full flex flex-col items-center justify-center text-center">
         <span className="bg-primary/10 text-primary font-display font-bold text-xs uppercase px-4 py-2 rounded-full tracking-widest mb-6">
-          🔥 La Meilleure Pizza de Djerba
+          La Meilleure Pizza de Djerba 🔥
         </span>
         
         {/* Giant Interactive Image */}
@@ -256,8 +282,8 @@ function Hero() {
   );
 }
 
-/* ─── Pizza Card Component (Dynamic Size Selector & Pricing) ─── */
-function PizzaCard({ pizza }: { pizza: { name: string, desc: string, p: number[] } }) {
+/* ─── Pizza Card Component (Dynamic Size Selector & Pricing & Add-to-Cart) ─── */
+function PizzaCard({ pizza, onAddToCart }: { pizza: { name: string, desc: string, p: number[] }; onAddToCart: (item: Omit<CartItem, "quantity">) => void }) {
   const [size, setSize] = useState<0 | 1 | 2>(1); // Default to Senior
   
   const sizeNames = ["Junior", "Senior", "Familiale"];
@@ -266,6 +292,15 @@ function PizzaCard({ pizza }: { pizza: { name: string, desc: string, p: number[]
     const text = `Bonjour Casa Presto, je voudrais commander une Pizza *${pizza.name}* (${sizeNames[size]}) s'il vous plaît ! 🍕`;
     const url = `https://wa.me/21628201445?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank');
+  };
+
+  const handleAdd = () => {
+    onAddToCart({
+      id: `pizza-${pizza.name.toLowerCase().replace(/\s+/g, "-")}-${sizeNames[size].toLowerCase()}`,
+      name: `Pizza ${pizza.name}`,
+      price: pizza.p[size],
+      size: sizeNames[size],
+    });
   };
 
   // Find matching local image
@@ -288,11 +323,11 @@ function PizzaCard({ pizza }: { pizza: { name: string, desc: string, p: number[]
     if (n.includes("4 saisons")) return "/menu/pizza-4saisons.jpg";
 
     // Fallbacks for remaining base tomate (quota exceeded)
-    if (n.includes("casa")) return "/menu/pizza-campione.jpg"; // beef/chicken/merguez
-    if (n.includes("chicken")) return "/menu/pizza-barbecue.jpg"; // poultry fallback
+    if (n.includes("casa")) return "/menu/pizza-campione.jpg"; 
+    if (n.includes("chicken")) return "/menu/pizza-barbecue.jpg"; 
 
     // Fallbacks for base creme (quota exceeded)
-    if (n.includes("venezia")) return "/menu/pizza-fruit-de-mer.jpg"; // salmon -> seafood fallback
+    if (n.includes("venezia")) return "/menu/pizza-fruit-de-mer.jpg"; 
     if (n.includes("rimini")) return "/menu/pizza-campione.jpg";
     if (n.includes("chèvre miel") || n.includes("chevre miel")) return "/menu/pizza-4fromages.jpg";
     if (n.includes("boursin")) return "/menu/pizza-campione.jpg";
@@ -317,7 +352,7 @@ function PizzaCard({ pizza }: { pizza: { name: string, desc: string, p: number[]
         </div>
         <h4 className="text-2xl font-display font-bold text-dark mb-2 group-hover:text-primary transition-colors flex items-center justify-between">
           <span>{pizza.name}</span>
-          {pizza.p[2] >= 31 && <span className="text-[10px] bg-red-100 text-red-600 px-2.5 py-1 rounded-full font-bold uppercase tracking-wider shrink-0">Chef Spécial</span>}
+          {pizza.p[2] >= 31 && <span className="text-[10px] bg-red-100 text-red-600 px-2.5 py-1 rounded-full font-bold uppercase tracking-wider shrink-0">Spécial</span>}
         </h4>
         <p className="text-sm text-text-muted mb-6 leading-relaxed min-h-[44px]">{pizza.desc}</p>
       </div>
@@ -348,19 +383,28 @@ function PizzaCard({ pizza }: { pizza: { name: string, desc: string, p: number[]
               <span className="text-sm font-bold text-gray-400 ml-1">dt</span>
             </div>
           </div>
-          <button 
-            onClick={handleWhatsApp} 
-            className="btn-primary px-6 py-3.5 text-[11px] font-bold shadow-md shadow-primary/10 flex items-center gap-2 group-hover:shadow-primary/30"
-          >
-            <span>💬 Commander</span>
-          </button>
+          <div className="flex gap-2">
+            <button 
+              onClick={handleWhatsApp} 
+              className="bg-green-50 hover:bg-green-500 hover:text-white text-green-600 px-3 py-3.5 rounded-2xl text-sm transition-all"
+              title="WhatsApp rapide"
+            >
+              💬
+            </button>
+            <button 
+              onClick={handleAdd} 
+              className="btn-primary px-5 py-3.5 text-[11px] font-bold shadow-md shadow-primary/10 flex items-center gap-1 group-hover:shadow-primary/30"
+            >
+              <span>+ Ajouter</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-function MenuList() {
+function MenuList({ onAddToCart }: { onAddToCart: (item: Omit<CartItem, "quantity">) => void }) {
   const [activeTab, setActiveTab] = useState<'all' | 'tomate' | 'creme' | 'texmex' | 'salades' | 'deals'>('all');
   const { ref, visible } = useReveal();
 
@@ -368,6 +412,14 @@ function MenuList() {
     const text = `Bonjour Casa Presto, je voudrais commander *${itemName}* ${details ? `(${details})` : ""} s'il vous plaît ! 🍕`;
     const url = `https://wa.me/21628201445?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank');
+  };
+
+  const handleAddCustom = (name: string, price: number) => {
+    onAddToCart({
+      id: name.toLowerCase().replace(/\s+/g, "-"),
+      name,
+      price,
+    });
   };
 
   const TABS = [
@@ -398,7 +450,7 @@ function MenuList() {
           <h2 className="text-4xl md:text-6xl font-display font-black text-dark tracking-tight mt-2">
             Découvrez Notre Carte
           </h2>
-          <p className="font-hand text-3xl md:text-4xl text-primary mt-3">Prête à être dégustée chaud</p>
+          <p className="font-hand text-3xl md:text-4xl text-primary mt-3">Prêt à être dégusté chaud</p>
         </div>
 
         {/* Categories Tab Selector */}
@@ -435,7 +487,7 @@ function MenuList() {
                 </span>
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {PIZZAS_TOMATE.map((p, i) => <PizzaCard key={i} pizza={p} />)}
+                {PIZZAS_TOMATE.map((p, i) => <PizzaCard key={i} pizza={p} onAddToCart={onAddToCart} />)}
               </div>
             </div>
           )}
@@ -455,7 +507,7 @@ function MenuList() {
                 </span>
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {PIZZAS_CREME.map((p, i) => <PizzaCard key={i} pizza={p} />)}
+                {PIZZAS_CREME.map((p, i) => <PizzaCard key={i} pizza={p} onAddToCart={onAddToCart} />)}
               </div>
             </div>
           )}
@@ -469,7 +521,7 @@ function MenuList() {
                     <h3 className="text-3xl font-display font-black text-dark flex items-center gap-3">
                       <span className="text-2xl">🍗</span> TEX-MEX &amp; FRITES
                     </h3>
-                    <p className="text-sm text-text-muted mt-1">Servis avec une portion généreuse de frites ou potatoes</p>
+                    <p className="text-sm text-text-muted mt-1">Servis avec une portion de frites ou potatoes</p>
                   </div>
                 </div>
                 <div className="grid md:grid-cols-3 gap-6">
@@ -481,9 +533,14 @@ function MenuList() {
                       </div>
                       <div className="flex items-center justify-between border-t border-gray-50 pt-4">
                         <span className="text-2xl font-black text-dark">{t.p.toFixed(3).replace(/\.000$/, "")} <span className="text-xs font-bold text-gray-400">dt</span></span>
-                        <button onClick={() => handleWhatsAppCustom(t.name)} className="bg-red-50 hover:bg-red-500 hover:text-white text-red-500 text-xs font-bold px-4 py-2.5 rounded-xl transition-all">
-                          💬 Commander
-                        </button>
+                        <div className="flex gap-2">
+                          <button onClick={() => handleWhatsAppCustom(t.name)} className="bg-green-50 text-green-600 px-3 py-2 rounded-xl text-xs font-bold hover:bg-green-500 hover:text-white transition-colors">
+                            💬
+                          </button>
+                          <button onClick={() => handleAddCustom(t.name, t.p)} className="bg-red-50 hover:bg-red-500 hover:text-white text-red-500 text-xs font-bold px-4 py-2 rounded-xl transition-all">
+                            + Panier
+                          </button>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -497,7 +554,7 @@ function MenuList() {
                       </div>
                       <div className="flex items-center gap-4">
                         <span className="font-black text-dark text-xl">{s.p.toFixed(3).replace(/\.000$/, "")} dt</span>
-                        <button onClick={() => handleWhatsAppCustom(s.name)} className="bg-gray-50 hover:bg-primary hover:text-white text-dark text-xs font-bold px-3 py-2 rounded-lg transition-colors">Commander</button>
+                        <button onClick={() => handleAddCustom(s.name, s.p)} className="bg-primary/10 hover:bg-primary hover:text-white text-primary text-xs font-bold px-4 py-2.5 rounded-xl transition-colors">+ Panier</button>
                       </div>
                     </div>
                   ))}
@@ -523,9 +580,14 @@ function MenuList() {
                     </div>
                     <div className="relative z-10 flex items-center gap-6 shrink-0 mt-4 md:mt-0">
                       <div className="text-4xl font-black text-dark">{z.p.toFixed(3).replace(/\.000$/, "")} <span className="text-lg font-bold text-gray-400">dt</span></div>
-                      <button onClick={() => handleWhatsAppCustom(z.name)} className="btn-primary px-8 py-4 text-xs shadow-lg shadow-primary/20">
-                        💬 Commander sur WhatsApp
-                      </button>
+                      <div className="flex gap-2">
+                        <button onClick={() => handleWhatsAppCustom(z.name)} className="bg-green-50 text-green-600 px-4 py-3 rounded-2xl hover:bg-green-500 hover:text-white transition-colors">
+                          💬
+                        </button>
+                        <button onClick={() => handleAddCustom(z.name, z.p)} className="btn-primary px-8 py-4 text-xs shadow-lg shadow-primary/20">
+                          + Ajouter au Panier
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -559,9 +621,14 @@ function MenuList() {
                     </div>
                     <div className="flex items-center justify-between border-t border-gray-50 pt-4">
                       <span className="text-2xl font-black text-dark">{s.p.toFixed(3).replace(/\.000$/, "")} <span className="text-xs font-bold text-gray-400">dt</span></span>
-                      <button onClick={() => handleWhatsAppCustom(`Salade ${s.name}`)} className="bg-green-50 hover:bg-accent-green hover:text-white text-accent-green text-xs font-bold px-4 py-2.5 rounded-xl transition-all">
-                        💬 Commander
-                      </button>
+                      <div className="flex gap-2">
+                        <button onClick={() => handleWhatsAppCustom(`Salade ${s.name}`)} className="bg-green-50 text-green-600 px-3 py-2 rounded-xl text-xs font-bold hover:bg-green-500 hover:text-white transition-colors">
+                          💬
+                        </button>
+                        <button onClick={() => handleAddCustom(`Salade ${s.name}`, s.p)} className="bg-green-50 hover:bg-accent-green hover:text-white text-accent-green text-xs font-bold px-4 py-2 rounded-xl transition-all">
+                          + Panier
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -595,9 +662,14 @@ function MenuList() {
                       <div className="text-3xl font-black text-dark">
                         {f.p.toFixed(3).replace(/\.000$/, "")} <span className="text-lg font-bold text-gray-400">dt</span>
                       </div>
-                      <button onClick={() => handleWhatsAppCustom(f.name)} className="btn-primary px-6 py-3.5 text-xs shadow-md shadow-primary/20">
-                        💬 Commander la Formule
-                      </button>
+                      <div className="flex gap-2">
+                        <button onClick={() => handleWhatsAppCustom(f.name)} className="bg-green-50 text-green-600 px-4 py-3 rounded-2xl hover:bg-green-500 hover:text-white transition-colors">
+                          💬
+                        </button>
+                        <button onClick={() => handleAddCustom(f.name, f.p)} className="btn-primary px-6 py-3.5 text-xs shadow-md shadow-primary/20">
+                          + Ajouter au Panier
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -616,9 +688,9 @@ function MenuList() {
                           <div className="font-bold text-dark text-lg group-hover:text-primary transition-colors">{d.name}</div>
                           <p className="text-xs text-text-muted">{d.desc}</p>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2">
                           <span className="font-black text-dark">{d.p.toFixed(3).replace(/\.000$/, "")} dt</span>
-                          <button onClick={() => handleWhatsAppCustom(d.name)} className="bg-gray-50 hover:bg-primary hover:text-white text-dark text-[10px] font-bold px-2.5 py-1.5 rounded-lg transition-all">Commander</button>
+                          <button onClick={() => handleAddCustom(d.name, d.p)} className="bg-primary/10 hover:bg-primary hover:text-white text-primary text-[10px] font-bold px-3 py-2 rounded-xl transition-all">+ Panier</button>
                         </div>
                       </div>
                     ))}
@@ -637,9 +709,9 @@ function MenuList() {
                           <div className="font-bold text-dark text-lg group-hover:text-primary transition-colors">{b.name}</div>
                           <p className="text-xs text-text-muted">{b.desc}</p>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2">
                           <span className="font-black text-dark">{b.p.toFixed(3).replace(/\.000$/, "")} dt</span>
-                          <button onClick={() => handleWhatsAppCustom(b.name)} className="bg-gray-50 hover:bg-primary hover:text-white text-dark text-[10px] font-bold px-2.5 py-1.5 rounded-lg transition-all">Commander</button>
+                          <button onClick={() => handleAddCustom(b.name, b.p)} className="bg-primary/10 hover:bg-primary hover:text-white text-primary text-[10px] font-bold px-3 py-2 rounded-xl transition-all">+ Panier</button>
                         </div>
                       </div>
                     ))}
@@ -761,7 +833,7 @@ function ReviewsSection() {
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {REVIEWS.map((r, i) => (
-            <div key={i} className="bg-white rounded-[32px] p-8 shadow-sm border border-gray-50 flex flex-col justify-between hover:shadow-xl transition-shadow">
+            <div key={i} className="bg-white rounded-[32px] p-8 shadow-sm border border-gray-55 flex flex-col justify-between hover:shadow-xl transition-shadow">
               <p className="text-sm text-text-muted italic leading-relaxed mb-6">
                 &ldquo;{r.text}&rdquo;
               </p>
@@ -851,18 +923,368 @@ function Footer() {
   );
 }
 
-export default function Page() {
+/* ─── GOATED CART DRAWER COMPONENT ─── */
+function CartDrawer({
+  isOpen,
+  onClose,
+  cart,
+  onUpdateQty,
+  onClearCart,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  cart: CartItem[];
+  onUpdateQty: (id: string, delta: number) => void;
+  onClearCart: () => void;
+}) {
+  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [customer, setCustomer] = useState({ name: "", phone: "", address: "", notes: "", paymentMethod: "cod" });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const handleNextStep = () => {
+    if (cart.length === 0) return;
+    setStep(2);
+  };
+
+  const handleWhatsAppBackup = () => {
+    // Generate text for WhatsApp
+    const orderItems = cart.map((i) => ` - ${i.quantity}x ${i.name} ${i.size ? `(${i.size})` : ""} - ${(i.price * i.quantity).toFixed(3)} dt`).join("\n");
+    const text = `*NOUVELLE COMMANDE - CASA PRESTO* 🍕\n\n*Client:* ${customer.name}\n*Téléphone:* ${customer.phone}\n*Adresse:* ${customer.address}\n${customer.notes ? `*Notes:* ${customer.notes}\n` : ""}*Paiement:* ${customer.paymentMethod === "cod" ? "Espèces" : "Carte"}\n\n*Articles:*\n${orderItems}\n\n*Total:* *${subtotal.toFixed(3)} dt*`;
+    const url = `https://wa.me/21628201445?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank");
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!customer.name || !customer.phone || !customer.address) {
+      setError("Veuillez remplir tous les champs obligatoires (*)");
+      return;
+    }
+    setError("");
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          cart,
+          customerInfo: customer,
+          orderTotal: subtotal,
+        }),
+      });
+
+      const resData = await response.json();
+      if (!response.ok) {
+        throw new Error(resData.error || "Une erreur est survenue");
+      }
+
+      setStep(3);
+      onClearCart();
+    } catch (err: any) {
+      setError(err.message || "Erreur de connexion avec le serveur");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!isOpen) return null;
+
   return (
-    <main className="bg-bg text-text selection:bg-primary selection:text-white">
+    <div className="fixed inset-0 z-50 flex justify-end">
+      {/* Overlay */}
+      <div onClick={onClose} className="absolute inset-0 bg-dark/60 backdrop-blur-sm transition-opacity"></div>
+      
+      {/* Drawer Container */}
+      <div className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col justify-between z-10 animate-slide-left border-l border-gray-100">
+        
+        {/* Header */}
+        <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+          <h3 className="font-display font-black text-2xl text-dark flex items-center gap-2">
+            <span>🛒</span> Mon Panier
+          </h3>
+          <button onClick={onClose} className="text-text-muted hover:text-dark text-xl p-1">✕</button>
+        </div>
+
+        {/* Content Area */}
+        <div className="flex-1 overflow-y-auto p-6">
+          
+          {step === 1 && (
+            <div>
+              {cart.length === 0 ? (
+                <div className="text-center py-16">
+                  <span className="text-6xl block mb-4">🍕</span>
+                  <div className="font-bold text-dark text-lg">Votre panier est vide</div>
+                  <p className="text-xs text-text-muted mt-2">Ajoutez des pizzas et des accompagnements gourmands pour commander !</p>
+                  <button onClick={onClose} className="btn-primary mt-6 px-6 py-3 text-xs">Découvrir la carte</button>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {cart.map((item) => (
+                    <div key={item.id} className="flex justify-between items-center bg-gray-50 p-4 rounded-2xl border border-gray-100/50">
+                      <div className="flex-1 pr-4">
+                        <div className="font-bold text-dark text-sm flex items-center flex-wrap gap-1.5">
+                          <span>{item.name}</span>
+                          {item.size && (
+                            <span className="text-[9px] bg-primary text-white px-2 py-0.5 rounded font-black uppercase">
+                              {item.size}
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-xs text-primary font-bold mt-1">
+                          {item.price.toFixed(3).replace(/\.000$/, "")} dt
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <button onClick={() => onUpdateQty(item.id, -1)} className="w-8 h-8 rounded-full bg-white border border-gray-250 flex items-center justify-center font-bold hover:bg-gray-100 transition-colors">-</button>
+                        <span className="font-black text-sm text-dark w-4 text-center">{item.quantity}</span>
+                        <button onClick={() => onUpdateQty(item.id, 1)} className="w-8 h-8 rounded-full bg-white border border-gray-250 flex items-center justify-center font-bold hover:bg-gray-100 transition-colors">+</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {step === 2 && (
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <h4 className="font-display font-bold text-dark text-lg border-b pb-2">📦 Détails de Livraison</h4>
+              
+              {error && <div className="bg-red-50 text-red-600 text-xs p-3 rounded-xl font-medium">{error}</div>}
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-1">Nom Complet *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Ex: Jamel Henchiri"
+                  value={customer.name}
+                  onChange={(e) => setCustomer({ ...customer, name: e.target.value })}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary text-dark"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-1">Numéro de Téléphone *</label>
+                <input
+                  type="tel"
+                  required
+                  placeholder="Ex: 28 201 445"
+                  value={customer.phone}
+                  onChange={(e) => setCustomer({ ...customer, phone: e.target.value })}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary text-dark"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-1">Adresse de livraison *</label>
+                <textarea
+                  required
+                  rows={2}
+                  placeholder="Ex: Houmt Souk, en face de l'hôtel X..."
+                  value={customer.address}
+                  onChange={(e) => setCustomer({ ...customer, address: e.target.value })}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary text-dark"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-1">Notes / Instructions (Optionnel)</label>
+                <input
+                  type="text"
+                  placeholder="Ex: Sauce piquante à part, sans oignons..."
+                  value={customer.notes}
+                  onChange={(e) => setCustomer({ ...customer, notes: e.target.value })}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary text-dark"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-2">Mode de Paiement</label>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setCustomer({ ...customer, paymentMethod: "cod" })}
+                    className={`py-3 rounded-xl border text-xs font-bold uppercase tracking-wider transition-all ${
+                      customer.paymentMethod === "cod"
+                        ? "border-primary bg-primary/5 text-primary"
+                        : "border-gray-200 bg-white text-text-muted hover:bg-gray-50"
+                    }`}
+                  >
+                    💵 Espèces
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCustomer({ ...customer, paymentMethod: "card" })}
+                    className={`py-3 rounded-xl border text-xs font-bold uppercase tracking-wider transition-all ${
+                      customer.paymentMethod === "card"
+                        ? "border-primary bg-primary/5 text-primary"
+                        : "border-gray-200 bg-white text-text-muted hover:bg-gray-50"
+                    }`}
+                  >
+                    💳 Carte / En ligne
+                  </button>
+                </div>
+              </div>
+              
+              <button type="submit" disabled={loading} className="w-full btn-primary py-4 text-xs font-bold uppercase tracking-wider mt-4">
+                {loading ? "Envoi de la commande..." : "✓ Confirmer la Commande"}
+              </button>
+            </form>
+          )}
+
+          {step === 3 && (
+            <div className="text-center py-12 space-y-6">
+              <span className="text-7xl block animate-bounce">🎉</span>
+              <h4 className="font-display font-black text-2xl text-dark">Commande Envoyée !</h4>
+              <p className="text-sm text-text-muted leading-relaxed max-w-sm mx-auto">
+                Votre commande a été transmise à notre cuisine. Vous allez recevoir un email de confirmation et nous vous contacterons par téléphone très rapidement !
+              </p>
+              
+              <div className="bg-primary/5 border border-primary/20 rounded-2xl p-5 text-left max-w-sm mx-auto space-y-2">
+                <div className="text-xs text-primary font-bold uppercase">Important - Djerba Delivery</div>
+                <p className="text-xs text-text-muted leading-snug">
+                  Par mesure de sécurité ou en cas de retard, vous pouvez doubler l&apos;envoi directement sur WhatsApp en cliquant ci-dessous.
+                </p>
+                <button onClick={handleWhatsAppBackup} className="w-full bg-green-500 hover:bg-green-600 text-white rounded-xl py-3 text-xs font-bold uppercase tracking-wider mt-2 flex items-center justify-center gap-2">
+                  <span>💬 Envoyer sur WhatsApp</span>
+                </button>
+              </div>
+
+              <button
+                onClick={() => {
+                  setStep(1);
+                  onClose();
+                }}
+                className="btn-outline px-8 py-3 text-xs uppercase"
+              >
+                Fermer
+              </button>
+            </div>
+          )}
+
+        </div>
+
+        {/* Footer Area (Prices & Subtotal) */}
+        {step < 3 && cart.length > 0 && (
+          <div className="p-6 border-t border-gray-100 bg-gray-50/50">
+            <div className="space-y-2 mb-6">
+              <div className="flex justify-between text-sm text-text-muted">
+                <span>Sous-total</span>
+                <span className="font-bold text-dark">{subtotal.toFixed(3).replace(/\.000$/, "")} dt</span>
+              </div>
+              <div className="flex justify-between text-sm text-text-muted">
+                <span>Livraison</span>
+                <span className="font-bold text-accent-green uppercase">Gratuite 🛵</span>
+              </div>
+              <div className="flex justify-between text-lg font-black text-dark border-t pt-2 mt-2">
+                <span>Total</span>
+                <span className="text-primary text-2xl font-black">{subtotal.toFixed(3).replace(/\.000$/, "")} dt</span>
+              </div>
+            </div>
+
+            {step === 1 && (
+              <button onClick={handleNextStep} className="w-full btn-primary py-4 text-xs font-bold uppercase tracking-wider">
+                Passer la commande
+              </button>
+            )}
+            
+            {step === 2 && (
+              <button onClick={() => setStep(1)} className="w-full text-center text-xs font-bold text-text-muted hover:text-dark uppercase tracking-wider py-2">
+                ← Retour au panier
+              </button>
+            )}
+          </div>
+        )}
+
+      </div>
+    </div>
+  );
+}
+
+export default function Page() {
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // Load cart from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem("casapresto_cart");
+    if (saved) {
+      try {
+        setCart(JSON.parse(saved));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }, []);
+
+  // Save cart to localStorage
+  const saveCart = (newCart: CartItem[]) => {
+    setCart(newCart);
+    localStorage.setItem("casapresto_cart", JSON.stringify(newCart));
+  };
+
+  const handleAddToCart = (item: Omit<CartItem, "quantity">) => {
+    const existing = cart.find((i) => i.id === item.id);
+    if (existing) {
+      saveCart(cart.map((i) => (i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i)));
+    } else {
+      saveCart([...cart, { ...item, quantity: 1 }]);
+    }
+    // Auto open cart drawer
+    setIsCartOpen(true);
+  };
+
+  const handleUpdateQty = (id: string, delta: number) => {
+    const updated = cart
+      .map((item) => (item.id === id ? { ...item, quantity: item.quantity + delta } : item))
+      .filter((item) => item.quantity > 0);
+    saveCart(updated);
+  };
+
+  const handleClearCart = () => {
+    saveCart([]);
+  };
+
+  const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  return (
+    <main className="bg-bg text-text selection:bg-primary selection:text-white min-h-screen relative">
       <Topbar />
-      <Navbar />
+      <Navbar onOpenCart={() => setIsCartOpen(true)} cartCount={totalCount} />
       <Hero />
-      <MenuList />
+      <MenuList onAddToCart={handleAddToCart} />
       <DropTagsSection />
       <DeliverySection />
       <ReviewsSection />
       <CTA />
       <Footer />
+
+      {/* Floating cart button at bottom right (sticky fallback for easy access) */}
+      {totalCount > 0 && !isCartOpen && (
+        <button
+          onClick={() => setIsCartOpen(true)}
+          className="fixed bottom-6 right-6 z-40 bg-primary text-white rounded-full w-16 h-16 shadow-2xl flex items-center justify-center border-2 border-white animate-bounce"
+        >
+          <span className="text-2xl">🛒</span>
+          <span className="absolute -top-1 -right-1 bg-red-600 border border-white text-white font-black text-[9px] w-5 h-5 rounded-full flex items-center justify-center">
+            {totalCount}
+          </span>
+        </button>
+      )}
+
+      {/* Goated Cart Drawer */}
+      <CartDrawer
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cart={cart}
+        onUpdateQty={handleUpdateQty}
+        onClearCart={handleClearCart}
+      />
     </main>
   );
 }
