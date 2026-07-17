@@ -85,7 +85,7 @@ export default function Hero() {
             <div className="flex -space-x-3">
               {[1, 2, 3, 4].map((i) => (
                 <div key={i} className="w-10 h-10 rounded-full border-2 border-dark bg-gray-200 overflow-hidden relative">
-                  <Image src={`/media__1783927186032.png`} alt="Client" fill className="object-cover" />
+                  <Image src={`/logo.jpg`} alt="Client" fill className="object-cover" />
                 </div>
               ))}
             </div>

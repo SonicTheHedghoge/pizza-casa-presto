@@ -7,21 +7,21 @@ import type { CartItem } from "./CartDrawer";
 
 // Map pizza names to artifact images for fallback
 const IMG_MAP: Record<string, string> = {
-  "Marguerita": "/pizza_marguerita_1784301955149.jpg",
-  "Reine": "/pizza_reine_1784301967839.jpg",
-  "Campione": "/pizza_campione_1784301979400.jpg",
-  "4 Fromages": "/pizza_4fromages_1784301991850.jpg",
-  "Calzone": "/pizza_calzone_1784302001999.jpg",
-  "Neptune": "/pizza_neptune_1784302013597.jpg",
-  "Barbecue": "/pizza_barbecue_1784302023122.jpg",
-  "Orientale": "/pizza_orientale_1784302033197.jpg",
-  "Pépé Originale": "/pizza_pepe_originale_1784302051691.jpg",
-  "La Tunisienne": "/pizza_la_tunisienne_1784302062813.jpg",
-  "Hawaïenne": "/pizza_hawaienne_1784302074344.jpg",
-  "Fruit de Mer": "/pizza_fruit_de_mer_1784302086946.jpg",
-  "4 Saisons": "/pizza_4saisons_1784302096444.jpg",
+  "Marguerita": "/menu/pizza-marguerita.jpg",
+  "Reine": "/menu/pizza-reine.jpg",
+  "Campione": "/menu/pizza-campione.jpg",
+  "4 Fromages": "/menu/pizza-4fromages.jpg",
+  "Calzone": "/menu/pizza-calzone.jpg",
+  "Neptune": "/menu/pizza-neptune.jpg",
+  "Barbecue": "/menu/pizza-barbecue.jpg",
+  "Orientale": "/menu/pizza-orientale.jpg",
+  "Pépé Originale": "/menu/pizza-pepe-originale.jpg",
+  "La Tunisienne": "/menu/pizza-la-tunisienne.jpg",
+  "Hawaïenne": "/menu/pizza-hawaienne.jpg",
+  "Fruit de Mer": "/menu/pizza-fruit-de-mer.jpg",
+  "4 Saisons": "/menu/pizza-4saisons.jpg",
 };
-const getImg = (n: string) => IMG_MAP[n] || "/pizza_marguerita_1784301955149.jpg";
+const getImg = (n: string) => IMG_MAP[n] || "/pizza-bbq.png";
 
 function PizzaCard({ pizza, onAddToCart }: { pizza: any, onAddToCart: (item: any) => void }) {
   const [size, setSize] = useState<0|1|2>(1);
