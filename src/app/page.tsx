@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 /* ─── Scroll Reveal Hook ─── */
-function useReveal(threshold = 0.15) {
+function useReveal(threshold = 0.1) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -16,24 +16,77 @@ function useReveal(threshold = 0.15) {
   return { ref, visible };
 }
 
-/* ─── DATA ─── */
-const MENU_ITEMS = [
-  { name: "Pizza Del Casa", price: "16.500", image: "/pizza-del-casa.png", slug: "pizza-del-casa" },
-  { name: "Pizza Margherita", price: "11.000", image: "/pizza-margherita.png", slug: "pizza-margherita" },
-  { name: "Pizza BBQ Chicken", price: "15.000", image: "/pizza-bbq.png", slug: "pizza-bbq" },
+/* ─── MENU DATA ─── */
+const PIZZAS_TOMATE = [
+  { name: "Marguerita", desc: "Tomate, Mozza, Origan", p: [8, 12, 20] },
+  { name: "Reine", desc: "Jambon, Champignons", p: [9, 16, 28] },
+  { name: "Campione", desc: "Viande Hachée, Champignons", p: [9, 16, 28] },
+  { name: "4 Fromages", desc: "Brie, Chèvre, Bleu", p: [9, 16, 28] },
+  { name: "Calzone", desc: "Jambon, Oeuf", p: [9, 16, 28] },
+  { name: "Neptune", desc: "Thon, Oeuf, Poivrons, Olives", p: [9, 16, 28] },
+  { name: "Barbecue", desc: "Sauce Barbecue, Mozza, Oignons, Poulet, Tomates Fraîches, Viande Hachée", p: [9, 16, 28] },
+  { name: "Orientale", desc: "Merguez, Poivrons, Oignons, Oeuf", p: [9, 16, 28] },
+  { name: "Pépé Originale", desc: "Sauce Tomate, Mozza, Pepperoni", p: [9, 16, 28] },
+  { name: "La Tunisienne", desc: "Thon, Champignons, Poivrons, Aubergines marinées, Oignons, Oeufs, Piment Vert, Persillades", p: [10, 18, 31] },
+  { name: "Hawaïenne", desc: "Jambon, Ananas", p: [10, 18, 31] },
+  { name: "Fruit de Mer", desc: "Calamars, Crevettes, Moules, Citron, Ail, Persil", p: [10, 18, 31] },
+  { name: "4 Saisons", desc: "Jambon, Champignons, Poivrons, Artichauts, Olives", p: [10, 18, 31] },
+  { name: "La Casa", desc: "Viande Hachée, Merguez, Poulet", p: [10, 18, 31] },
+  { name: "Pépé Del Casa", desc: "Poulet, Tomates Cerises, Pepperoni, Gouda, Emmental", p: [10, 18, 31] },
+  { name: "Chicken", desc: "Poulet, Tomate Cerise, Poivrons, Parmesan", p: [10, 18, 31] },
 ];
 
-const PRODUCTS = [
-  { name: "MARGHERITA", image: "/pizza-margherita.png" },
-  { name: "DEL CASA", image: "/pizza-del-casa.png" },
-  { name: "BBQ CHICKEN", image: "/pizza-bbq.png" },
-  { name: "SLICES", image: "/pizza-slice.png" },
+const PIZZAS_CREME = [
+  { name: "Venezia", desc: "Saumon Fumé, Citron", p: [10.5, 18, 32] },
+  { name: "Rimini", desc: "Poulet, Champignons, Pomme de Terre", p: [10.5, 18, 32] },
+  { name: "Chèvre Miel", desc: "Double Mozza, Chèvre, Miel, Oeuf", p: [10.5, 18, 32] },
+  { name: "Boursin", desc: "Viande Hachée, Boursin, Oignons, Oeuf", p: [10.5, 18, 32] },
 ];
 
-const REVIEWS = [
-  { name: "Safeeyah (Local Guide)", text: "Hier soir, nous avons pris des pizzas chez Casa Presto. C'est sans doute la meilleure pizza de Djerba ! Le service était excellent et la pizza était délicieuse ! Le cadre sur place est confortable, propre et le personnel est très amical." },
-  { name: "Jamel Henchiri", text: "Très bonne pizza, genre Pizza Hut, service parfait. Menu pas cher du tout. La livraison est super rapide sur leurs scooters électriques, c'est le top !" },
-  { name: "Mohamed Hedi Maïza", text: "Très bonnes pizzas. J'ai goûté la Barbecue. Elle était excellente et le service est vraiment rapide et agréable. Je recommande fortement." },
+const TEX_MEX = [
+  { name: "Chicken Wings", desc: "8 Pièces", p: 7.9 },
+  { name: "Calamars frits", desc: "8 Pièces", p: 7.9 },
+  { name: "Nuggets", desc: "8 Pièces", p: 7.9 },
+];
+
+const TEX_MEX_SIDES = [
+  { name: "Frites", p: 4 },
+  { name: "Frites Cheddar", p: 5 },
+];
+
+const ZAPWICH = [
+  { name: "Zapwich", desc: "Viande au choix ou 4 Fromages (Viande Hachée, Merguez, Poulet, Saumon). Avec Frites.", p: 8.5 },
+];
+
+const MENU_MIDI = [
+  { name: "Menu Midi", desc: "1 Pizza Junior + 1 Boisson + 1 Dessert Grec", p: 10.5 },
+];
+
+const KID_BOX = [
+  { name: "Kid Box", desc: "Nuggets x4, Frites, 1 Boisson, 1 Surprise", p: 6.9 },
+];
+
+const DESSERTS = [
+  { name: "Tiramisu", p: 4.9 },
+  { name: "Mousse au Chocolat", p: 4.9 },
+  { name: "Dessert Grec", p: 4.9 },
+];
+
+const BOISSONS = [
+  { name: "Sodas", p: 2 },
+  { name: "Eau Gazeuse 0.5l", p: 1.5 },
+  { name: "Eau Minérale 0.5l", p: 1 },
+];
+
+const SALADES = [
+  { name: "Exotique", desc: "Salade, Tomates, Maïs, Crevettes", p: 6.5 },
+  { name: "Antillais", desc: "Salade, Tomates, Jambon, Ananas, Maïs", p: 6.5 },
+  { name: "Chef", desc: "Salade, Tomates, Gruyère, Jambon, Cornichons, Maïs", p: 6.5 },
+  { name: "Italienne", desc: "Salade, Tomates, Poivrons, Olives, Anchois, Gruyère", p: 6.5 },
+  { name: "Niçoise", desc: "Salade, Tomates, Pomme de terre, Thon, Olives, Oeuf", p: 6.5 },
+  { name: "Royale", desc: "Salade, Tomates, Poulet, Croûtons, Chèvre Chaud", p: 6.5 },
+  { name: "Norvégienne", desc: "Salade, Tomates, Saumon Fumé, Crème Fraîche, Citron", p: 6.5 },
+  { name: "Grecque au Surimi", desc: "Salade, Tomates, Concombre, Surimi de Crabe, Poivrons, Oignons, Fromage, Huile d'Olive, Origan, Sel Poivre, Citron", p: 9.9 },
 ];
 
 const DROP_TAGS = [
@@ -49,7 +102,7 @@ const DROP_TAGS = [
 
 function Topbar() {
   return (
-    <div className="bg-red text-white text-center py-2.5 text-sm font-display font-medium tracking-wide">
+    <div className="bg-primary text-white text-center py-2.5 text-sm font-display font-medium tracking-wide">
       Friday Pizza Night! Profitez de 15% de réduction chez Pizza Casa Presto ! 🍕
     </div>
   );
@@ -64,31 +117,34 @@ function Navbar() {
     return () => window.removeEventListener("scroll", h);
   }, []);
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? "bg-cream/95 backdrop-blur-md shadow-sm" : "bg-cream"}`}>
+    <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? "bg-bg/95 backdrop-blur-md shadow-sm" : "bg-bg"}`}>
       <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between h-[72px]">
-        <a href="#" className="font-display text-[28px] font-extrabold text-red italic">Casa Presto</a>
+        <a href="#" className="font-display text-[28px] font-extrabold text-primary italic">Casa Presto</a>
         <nav className="hidden md:flex items-center gap-8">
           {[
             { label: "Menu", href: "#menu" },
+            { label: "Livraison", href: "#delivery" },
             { label: "À Propos", href: "#about" },
-            { label: "Avis", href: "#reviews" },
           ].map((l) => (
             <a key={l.label} href={l.href} className="group relative text-sm font-medium text-dark uppercase tracking-wide">
               <span className="block transition-transform duration-300 group-hover:-translate-y-full">{l.label}</span>
-              <span className="absolute inset-0 block text-red translate-y-full transition-transform duration-300 group-hover:translate-y-0">{l.label}</span>
+              <span className="absolute inset-0 block text-primary translate-y-full transition-transform duration-300 group-hover:translate-y-0">{l.label}</span>
             </a>
           ))}
         </nav>
-        <a href="#contact" className="btn-primary hidden md:inline-flex px-6 py-2.5 text-xs">Contact</a>
+        <div className="hidden md:flex items-center gap-4">
+          <div className="font-display font-bold text-lg">☎ 75 655 169</div>
+          <a href="#menu" className="btn-primary px-6 py-2.5 text-xs">Commander</a>
+        </div>
         <button onClick={() => setOpen(!open)} className="md:hidden w-8 h-8 flex flex-col justify-center gap-1.5" aria-label="Menu">
           <span className={`block h-0.5 w-full bg-dark transition-all ${open ? "rotate-45 translate-y-2" : ""}`} />
-          <span className={`block h-0.5 w-full bg-red transition-all ${open ? "opacity-0" : ""}`} />
+          <span className={`block h-0.5 w-full bg-primary transition-all ${open ? "opacity-0" : ""}`} />
           <span className={`block h-0.5 w-full bg-dark transition-all ${open ? "-rotate-45 -translate-y-2" : ""}`} />
         </button>
       </div>
       {open && (
-        <div className="md:hidden bg-cream border-t border-cream-dark px-6 pb-6 space-y-4">
-          {["Menu", "À Propos", "Avis", "Contact"].map((l) => (
+        <div className="md:hidden bg-bg border-t border-bg-alt px-6 pb-6 space-y-4 pt-4">
+          {["Menu", "Livraison", "À Propos"].map((l) => (
             <a key={l} href={`#${l.toLowerCase().replace("à propos", "about")}`} onClick={() => setOpen(false)} className="block font-display text-lg text-dark uppercase">{l}</a>
           ))}
         </div>
@@ -99,19 +155,19 @@ function Navbar() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden py-8 md:py-0 md:min-h-[85vh] flex items-center bg-[#FEF3E8]">
+    <section className="relative overflow-hidden py-10 md:py-0 md:min-h-[85vh] flex items-center bg-bg">
       {/* Marquee Text Behind */}
-      <div className="absolute inset-0 flex flex-col justify-center pointer-events-none select-none overflow-hidden z-0">
+      <div className="absolute inset-0 flex flex-col justify-center pointer-events-none select-none overflow-hidden z-0 opacity-10">
         <div className="flex whitespace-nowrap" style={{ animation: "marquee-left 25s linear infinite" }}>
           {[...Array(4)].map((_, i) => (
-            <h1 key={`a${i}`} className="text-[clamp(4rem,12vw,10rem)] font-display font-black uppercase text-red leading-none mx-4 shrink-0">
+            <h1 key={`a${i}`} className="text-[clamp(4rem,12vw,10rem)] font-display font-black uppercase text-primary leading-none mx-4 shrink-0">
               Casa Presto – Pizza, Bites &amp; Vibes
             </h1>
           ))}
         </div>
         <div className="flex whitespace-nowrap mt-2" style={{ animation: "marquee-right 30s linear infinite" }}>
           {[...Array(4)].map((_, i) => (
-            <h1 key={`b${i}`} className="text-[clamp(4rem,12vw,10rem)] font-display font-black uppercase text-stroke-red leading-none mx-4 shrink-0">
+            <h1 key={`b${i}`} className="text-[clamp(4rem,12vw,10rem)] font-display font-black uppercase text-stroke-primary leading-none mx-4 shrink-0">
               Casa Presto – Pizza, Bites &amp; Vibes
             </h1>
           ))}
@@ -119,124 +175,212 @@ function Hero() {
       </div>
       {/* Center Content */}
       <div className="relative z-10 max-w-[1280px] mx-auto px-6 flex flex-col items-center text-center">
-        <div className="relative w-[min(80vw,520px)] aspect-square">
-          <Image src="/hero-pizza.png" alt="Casa Presto Hero Pizza" fill className="object-contain drop-shadow-2xl" priority sizes="(max-width:768px) 80vw, 520px" />
+        <div className="relative w-[min(90vw,520px)] aspect-square mt-8 md:mt-0">
+          <Image src="/hero-pizza.png" alt="Casa Presto Hero Pizza" fill className="object-contain drop-shadow-2xl" priority sizes="(max-width:768px) 90vw, 520px" />
         </div>
-        <a href="#menu" className="btn-primary px-10 py-4 text-sm mt-6">Explorer le Menu</a>
+        <div className="mt-8 flex flex-col md:flex-row items-center justify-center gap-4">
+          <a href="#menu" className="btn-primary px-10 py-4 text-sm w-full md:w-auto">Explorer le Menu</a>
+          <a href="#delivery" className="btn-outline px-10 py-4 text-sm w-full md:w-auto">Livraison Écolo</a>
+        </div>
       </div>
     </section>
   );
 }
 
-function About() {
+function MenuList() {
   const { ref, visible } = useReveal();
   return (
-    <section id="about" className="relative">
-      <div className="grid lg:grid-cols-2">
-        {/* Image */}
-        <div className="relative aspect-[4/3] lg:aspect-auto overflow-hidden">
-          <Image src="/about-restaurant.png" alt="Pizzeria Casa Presto" fill className="object-cover" sizes="(max-width:1024px) 100vw, 50vw" />
-        </div>
-        {/* Content */}
-        <div ref={ref} className="bg-dark text-white p-10 md:p-16 lg:p-20 flex flex-col justify-center">
-          <h2 className={`text-4xl md:text-5xl font-display font-bold leading-tight transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-            Les meilleures pizzas artisanales de Djerba.
+    <section id="menu" className="py-20 md:py-28 bg-bg-alt relative">
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-[0.03]" style={{ backgroundImage: 'url("/brick-wall.png")' }}></div>
+      <div className="max-w-[1280px] mx-auto px-6 relative z-10" ref={ref}>
+        {/* Title */}
+        <div className="text-center mb-16">
+          <h2 className={`text-5xl md:text-6xl font-display font-bold text-primary transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+            Notre Carte
           </h2>
-          <p className={`mt-6 text-white/70 text-lg leading-relaxed transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-            Chez Pizza Casa Presto, nous croyons à l&apos;art de la pizza traditionnelle au feu de bois. Une pâte à fermentation lente, de la sauce tomate cuisinée maison avec amour, et des fromages crémeux de qualité supérieure. Une texture croustillante à l&apos;extérieur et moelleuse à l&apos;intérieur.
-          </p>
-          <div className={`mt-8 transition-all duration-700 delay-300 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-            <a href="#menu" className="btn-primary inline-flex px-8 py-3 text-xs">Découvrir la carte</a>
-          </div>
+          <p className="font-hand text-3xl md:text-4xl text-dark mt-2">Délice garantie à chaque bouchée</p>
         </div>
-      </div>
-      {/* About marquee */}
-      <div className="bg-red py-5 overflow-hidden">
-        <div className="flex whitespace-nowrap" style={{ animation: "marquee-left 20s linear infinite" }}>
-          {[...Array(8)].map((_, i) => (
-            <span key={i} className="flex items-center shrink-0">
-              <span className="text-3xl md:text-4xl font-hand text-white mx-4">C&apos;est l&apos;Heure Pizza Casa Presto</span>
-              <span className="w-2.5 h-2.5 rounded-full bg-white/50 mx-4 shrink-0" />
-            </span>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
-function MenuSection() {
-  const { ref, visible } = useReveal();
-  return (
-    <section id="menu" className="py-20 md:py-28" ref={ref}>
-      <div className="max-w-[1280px] mx-auto px-6">
-        {/* Heading */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
-          <div>
-            <h2 className={`text-4xl md:text-5xl font-display font-bold text-red transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-              Au Menu de Pizza Casa Presto
-            </h2>
-            <p className={`mt-3 text-text-muted text-lg max-w-xl transition-all duration-700 delay-150 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-              Des pizzas savoureuses, généreuses et chaudes. Choisissez votre recette favorite ou créez la vôtre.
-            </p>
+        {/* PIZZAS */}
+        <div className="mb-20">
+          <div className="flex items-center gap-4 mb-8 border-b-2 border-primary/20 pb-4">
+            <h3 className="text-4xl font-display font-bold text-primary uppercase">Pizzas</h3>
+            <span className="bg-primary text-white px-3 py-1 text-xs font-bold rounded-full">100% Lait</span>
           </div>
-          <a href="#menu" className={`btn-outline inline-flex px-7 py-3 text-xs shrink-0 transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-            Explorer Tout Le Menu
-          </a>
-        </div>
-        {/* Cards */}
-        <div className="grid md:grid-cols-3 gap-8">
-          {MENU_ITEMS.map((item, i) => (
-            <div
-              key={item.slug}
-              className={`group bg-cream-dark rounded-3xl overflow-hidden transition-all duration-700 hover:shadow-xl hover:-translate-y-2 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
-              style={{ transitionDelay: `${200 + i * 150}ms` }}
-            >
-              <div className="relative aspect-[4/3] overflow-hidden bg-black">
-                <Image src={item.image} alt={item.name} fill className="object-cover blend-screen group-hover:scale-110 transition-transform duration-700" sizes="(max-width:768px) 100vw, 33vw" />
-              </div>
-              <div className="p-6 flex items-center justify-between">
-                <div>
-                  <h3 className="font-display font-bold text-xl text-dark">{item.name}</h3>
-                  <p className="text-red font-bold text-lg mt-1">{item.price} DT</p>
+
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+            {/* Base Tomate */}
+            <div>
+              <div className="flex justify-between items-end mb-6 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                <h4 className="text-2xl font-display font-bold text-red-600">Base Tomate Mozza</h4>
+                <div className="flex gap-4 text-xs font-bold text-gray-500 uppercase">
+                  <span className="w-12 text-center text-primary">Junior</span>
+                  <span className="w-12 text-center text-primary">Senior</span>
+                  <span className="w-16 text-center text-primary">Familiale</span>
                 </div>
-                <a href="#" className="btn-primary px-5 py-2.5 text-[10px]">Commander</a>
+              </div>
+              <div className="space-y-4">
+                {PIZZAS_TOMATE.map((p, i) => (
+                  <div key={i} className="flex justify-between items-center group">
+                    <div className="pr-4 flex-1">
+                      <div className="font-bold text-dark text-lg group-hover:text-primary transition-colors">{p.name}</div>
+                      <div className="text-sm text-text-muted leading-tight">{p.desc}</div>
+                    </div>
+                    <div className="flex gap-4 text-sm font-bold text-dark shrink-0">
+                      <span className="w-12 text-center bg-white py-1 rounded shadow-sm">{p.p[0]}<span className="text-[10px] text-gray-400">dt</span></span>
+                      <span className="w-12 text-center bg-white py-1 rounded shadow-sm">{p.p[1]}<span className="text-[10px] text-gray-400">dt</span></span>
+                      <span className="w-16 text-center bg-primary text-white py-1 rounded shadow-sm">{p.p[2]}<span className="text-[10px] text-white/70">dt</span></span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
-function ProductsSection() {
-  const { ref, visible } = useReveal();
-  return (
-    <section className="py-20 md:py-28 bg-cream" ref={ref}>
-      <div className="max-w-[1280px] mx-auto px-6">
-        <div className="text-center mb-14">
-          <h2 className={`text-4xl md:text-5xl font-display font-bold text-red transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-            La Sélection de Saisons
-          </h2>
-          <p className={`mt-3 text-text-muted text-lg max-w-xl mx-auto transition-all duration-700 delay-150 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-            Commandez en ligne la pizza de votre choix. Prête en moins de 15 minutes.
-          </p>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-          {PRODUCTS.map((p, i) => (
-            <div
-              key={p.name}
-              className={`group text-center transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
-              style={{ transitionDelay: `${200 + i * 120}ms` }}
-            >
-              <div className="relative mx-auto w-full aspect-square rounded-full overflow-hidden bg-black border-4 border-transparent group-hover:border-red transition-all duration-500 group-hover:shadow-lg">
-                <Image src={p.image} alt={p.name} fill className="object-cover blend-screen group-hover:scale-110 transition-transform duration-700" sizes="25vw" />
+            {/* Base Creme */}
+            <div>
+              <div className="flex justify-between items-end mb-6 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                <h4 className="text-2xl font-display font-bold text-gray-800">Base Crème Mozza</h4>
+                <div className="flex gap-4 text-xs font-bold text-gray-500 uppercase">
+                  <span className="w-12 text-center text-primary">Junior</span>
+                  <span className="w-12 text-center text-primary">Senior</span>
+                  <span className="w-16 text-center text-primary">Familiale</span>
+                </div>
               </div>
-              <h3 className="mt-4 font-display font-bold text-xl md:text-2xl uppercase text-dark group-hover:text-red transition-colors">{p.name}</h3>
+              <div className="space-y-4">
+                {PIZZAS_CREME.map((p, i) => (
+                  <div key={i} className="flex justify-between items-center group">
+                    <div className="pr-4 flex-1">
+                      <div className="font-bold text-dark text-lg group-hover:text-primary transition-colors">{p.name}</div>
+                      <div className="text-sm text-text-muted leading-tight">{p.desc}</div>
+                    </div>
+                    <div className="flex gap-4 text-sm font-bold text-dark shrink-0">
+                      <span className="w-12 text-center bg-white py-1 rounded shadow-sm">{p.p[0]}<span className="text-[10px] text-gray-400">dt</span></span>
+                      <span className="w-12 text-center bg-white py-1 rounded shadow-sm">{p.p[1]}<span className="text-[10px] text-gray-400">dt</span></span>
+                      <span className="w-16 text-center bg-primary text-white py-1 rounded shadow-sm">{p.p[2]}<span className="text-[10px] text-white/70">dt</span></span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* ZAPWICH */}
+              <div className="mt-12">
+                <div className="flex items-center gap-4 mb-6 border-b-2 border-primary/20 pb-4">
+                  <h3 className="text-4xl font-display font-bold text-primary uppercase">Zapwich</h3>
+                </div>
+                {ZAPWICH.map((z, i) => (
+                  <div key={i} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex justify-between items-center relative overflow-hidden">
+                    <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-primary/5 rounded-full blur-2xl"></div>
+                    <div className="relative z-10 pr-6">
+                      <div className="font-bold text-dark text-xl">{z.name}</div>
+                      <div className="text-sm text-text-muted mt-1">{z.desc}</div>
+                    </div>
+                    <div className="relative z-10 text-2xl font-bold text-primary shrink-0">
+                      {z.p}<span className="text-sm text-gray-400">dt</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
+          </div>
         </div>
+
+        {/* TEX-MEX & SALADES */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+          {/* Tex-Mex */}
+          <div>
+            <div className="flex items-center gap-4 mb-8 border-b-2 border-red-600/20 pb-4">
+              <h3 className="text-4xl font-display font-bold text-red-600 uppercase">Tex-Mex</h3>
+              <span className="bg-red-600 text-white px-3 py-1 text-xs font-bold rounded-full">Frites/Potatoes Inclus</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+              {TEX_MEX.map((t, i) => (
+                <div key={i} className="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-100 group hover:border-red-200 transition-colors">
+                  <div className="font-display font-bold text-dark text-lg group-hover:text-red-600">{t.name}</div>
+                  <div className="text-xs text-text-muted mb-3">{t.desc}</div>
+                  <div className="text-xl font-bold text-red-600 bg-red-50 rounded-lg py-2">{t.p} <span className="text-xs">dt</span></div>
+                </div>
+              ))}
+            </div>
+            <div className="flex gap-4">
+              {TEX_MEX_SIDES.map((s, i) => (
+                <div key={i} className="flex-1 bg-white rounded-xl p-4 flex justify-between items-center shadow-sm border border-gray-100">
+                  <span className="font-bold text-dark">{s.name}</span>
+                  <span className="font-bold text-red-600">{s.p} <span className="text-xs">dt</span></span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Salades */}
+          <div>
+            <div className="flex items-center gap-4 mb-8 border-b-2 border-accent-green/20 pb-4">
+              <h3 className="text-4xl font-display font-bold text-accent-green uppercase">Salades</h3>
+              <span className="bg-accent-green text-white px-3 py-1 text-xs font-bold rounded-full">Pain Offert</span>
+            </div>
+            <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
+              <div className="flex justify-between items-center mb-6 bg-green-50 p-4 rounded-xl">
+                <span className="font-bold text-accent-green">Toutes nos salades (sauf Grecque)</span>
+                <span className="text-xl font-bold text-accent-green">6.5 <span className="text-xs">dt</span></span>
+              </div>
+              <div className="space-y-4">
+                {SALADES.map((s, i) => (
+                  <div key={i} className="flex justify-between items-start group">
+                    <div className="pr-4">
+                      <div className="font-bold text-dark group-hover:text-accent-green transition-colors">{s.name}</div>
+                      <div className="text-sm text-text-muted">{s.desc}</div>
+                    </div>
+                    {s.p !== 6.5 && (
+                      <div className="font-bold text-accent-green shrink-0 whitespace-nowrap bg-green-50 px-3 py-1 rounded-lg">
+                        {s.p} <span className="text-xs">dt</span>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* KIDS & DEALS */}
+        <div className="mt-20 grid md:grid-cols-3 gap-8">
+          {/* Menu Midi */}
+          <div className="bg-white rounded-3xl p-8 text-center shadow-sm border-2 border-primary/20 relative overflow-hidden group hover:border-primary transition-colors">
+            <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-4 py-1 rounded-bl-xl">DEAL</div>
+            <h4 className="text-3xl font-display font-bold text-primary mb-2">Menu Midi</h4>
+            <p className="text-sm text-text-muted mb-6 h-10">{MENU_MIDI[0].desc}</p>
+            <div className="text-4xl font-black text-dark">{MENU_MIDI[0].p} <span className="text-lg">dt</span></div>
+          </div>
+
+          {/* Kid Box */}
+          <div className="bg-blue-50 rounded-3xl p-8 text-center shadow-sm border-2 border-blue-200 relative overflow-hidden group hover:border-blue-400 transition-colors">
+            <div className="absolute top-0 right-0 bg-blue-500 text-white text-xs font-bold px-4 py-1 rounded-bl-xl">KIDS</div>
+            <h4 className="text-3xl font-display font-bold text-blue-600 mb-2">Kid Box</h4>
+            <p className="text-sm text-text-muted mb-6 h-10">{KID_BOX[0].desc}</p>
+            <div className="text-4xl font-black text-dark">{KID_BOX[0].p} <span className="text-lg">dt</span></div>
+          </div>
+
+          {/* Desserts & Boissons */}
+          <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 flex flex-col justify-center">
+            <div className="mb-6">
+              <h4 className="font-display font-bold text-dark text-xl mb-3 border-b pb-2">Desserts (4.9 dt)</h4>
+              <div className="flex flex-wrap gap-2">
+                {DESSERTS.map(d => <span key={d.name} className="text-sm bg-gray-50 px-3 py-1 rounded-full text-text-muted">{d.name}</span>)}
+              </div>
+            </div>
+            <div>
+              <h4 className="font-display font-bold text-dark text-xl mb-3 border-b pb-2">Boissons</h4>
+              <div className="space-y-2">
+                {BOISSONS.map(b => (
+                  <div key={b.name} className="flex justify-between text-sm text-text-muted">
+                    <span>{b.name}</span>
+                    <span className="font-bold text-dark">{b.p} dt</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );
@@ -245,39 +389,17 @@ function ProductsSection() {
 function DifferenceSection() {
   const { ref, visible } = useReveal();
   return (
-    <section className="py-20 md:py-28" ref={ref}>
-      <div className="max-w-[1280px] mx-auto px-6">
-        <div className="text-center mb-14">
-          <h2 className={`text-4xl md:text-5xl font-display font-bold text-red transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-            Notre Recette Magique
+    <section className="py-20 bg-bg overflow-hidden relative" ref={ref}>
+      <div className="max-w-[1280px] mx-auto px-6 relative">
+        <div className="text-center mb-16">
+          <h2 className={`text-4xl md:text-5xl font-display font-bold text-dark transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+            Pourquoi Casa Presto ?
           </h2>
-          <p className={`mt-3 text-text-muted text-lg max-w-xl mx-auto transition-all duration-700 delay-150 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-            Une croûte gonflée et aérée, un mélange exclusif de fromages fondants et des garnitures savoureuses.
-          </p>
         </div>
-        {/* Annotated Image */}
-        <div className={`relative max-w-3xl mx-auto transition-all duration-700 delay-300 ${visible ? "opacity-100 scale-100" : "opacity-0 scale-90"}`}>
-          {/* Left annotations */}
-          <div className="absolute left-0 top-[20%] -translate-x-[10%] hidden md:block">
-            <p className="font-hand text-2xl text-red text-right">Pâte levée<br/>24h minimum</p>
-            <svg className="ml-auto mt-1" width="80" height="40" viewBox="0 0 80 40" fill="none"><path d="M0 5C30 5 50 35 80 35" stroke="#C41E24" strokeWidth="2" strokeDasharray="6 4" /></svg>
-          </div>
-          <div className="absolute left-0 bottom-[20%] -translate-x-[10%] hidden md:block">
-            <p className="font-hand text-2xl text-red text-right">Four à bois<br/>traditionnel</p>
-            <svg className="ml-auto mt-1" width="80" height="40" viewBox="0 0 80 40" fill="none"><path d="M0 35C30 35 50 5 80 5" stroke="#C41E24" strokeWidth="2" strokeDasharray="6 4" /></svg>
-          </div>
-          {/* Right annotations */}
-          <div className="absolute right-0 top-[20%] translate-x-[10%] hidden md:block">
-            <p className="font-hand text-2xl text-red">Fromages<br/>fondants de<br/>Djerba</p>
-            <svg className="mt-1" width="80" height="40" viewBox="0 0 80 40" fill="none"><path d="M80 5C50 5 30 35 0 35" stroke="#C41E24" strokeWidth="2" strokeDasharray="6 4" /></svg>
-          </div>
-          <div className="absolute right-0 bottom-[20%] translate-x-[10%] hidden md:block">
-            <p className="font-hand text-2xl text-red">Sauce aromatique<br/>secrète</p>
-            <svg className="mt-1" width="80" height="40" viewBox="0 0 80 40" fill="none"><path d="M80 35C50 35 30 5 0 5" stroke="#C41E24" strokeWidth="2" strokeDasharray="6 4" /></svg>
-          </div>
-          {/* Center pizza with blend-screen */}
-          <div className="relative w-[min(70vw,400px)] aspect-square mx-auto bg-black rounded-full overflow-hidden border-2 border-black">
-            <Image src="/hero-pizza.png" alt="Notre Pizza Secrète" fill className="object-cover blend-screen" sizes="400px" />
+        <div className="relative max-w-4xl mx-auto min-h-[500px] flex items-center justify-center">
+          {/* Center pizza with bg-dark */}
+          <div className="relative w-[min(70vw,400px)] aspect-square mx-auto bg-dark rounded-full overflow-hidden border-2 border-dark">
+            <Image src="/hero-pizza.png" alt="Notre Pizza Secrète" fill className="object-cover" sizes="400px" />
           </div>
         </div>
       </div>
@@ -285,153 +407,105 @@ function DifferenceSection() {
   );
 }
 
-function DropsSection() {
-  const { ref, visible } = useReveal(0.3);
+function DropTagsSection() {
+  const { ref, visible } = useReveal(0.4);
   return (
-    <section className="relative py-32 md:py-44 overflow-hidden" ref={ref}>
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <Image src="/pizza-margherita.png" alt="" fill className="object-cover" sizes="100vw" />
-        <div className="absolute inset-0 bg-black/70" />
+    <section className="py-24 bg-dark relative overflow-hidden" ref={ref}>
+      <div className="absolute inset-0 opacity-10">
+        <Image src="/hero-pizza.png" alt="Bg" fill className="object-cover" />
       </div>
-      {/* Dropping Tags */}
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-        <div className="relative min-h-[200px] mb-8 flex flex-wrap justify-center gap-3">
-          {DROP_TAGS.map((tag) => (
-            <span
-              key={tag.text}
-              className={`inline-block bg-white/95 text-dark rounded-full px-5 py-2 text-sm font-hand text-xl tracking-wide transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-40"}`}
+      <div className="relative z-10 max-w-[1280px] mx-auto px-6 flex flex-col items-center">
+        <h2 className={`text-center text-4xl md:text-6xl font-display font-black text-white mb-16 uppercase transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+          L&apos;artisanat <span className="text-primary block mt-2">Djerbien</span>
+        </h2>
+        <div className="flex flex-wrap justify-center gap-4 md:gap-6 max-w-4xl">
+          {DROP_TAGS.map((tag, i) => (
+            <div
+              key={i}
+              className="bg-primary text-white font-display font-bold text-sm md:text-lg px-6 py-3 rounded-full shadow-lg"
               style={{
-                transitionDelay: tag.delay,
-                transform: visible ? `rotate(${tag.rotate})` : `translateY(-200px) rotate(${tag.rotate})`,
+                transform: visible ? `rotate(${tag.rotate}) translateY(0)` : `rotate(0deg) translateY(-100px)`,
+                opacity: visible ? 1 : 0,
+                transition: `all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) ${tag.delay}`,
               }}
             >
               {tag.text}
-            </span>
+            </div>
           ))}
         </div>
-        <h2 className={`text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white uppercase leading-tight transition-all duration-700 delay-500 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-          Certaines choses et pensées <span className="text-gold italic">prennent du temps</span>, mais manger une bonne pizza chaude n&apos;en fait pas partie !
-        </h2>
       </div>
     </section>
   );
 }
 
-function ReviewsSection() {
-  const [active, setActive] = useState(0);
+function DeliverySection() {
   const { ref, visible } = useReveal();
   return (
-    <section id="reviews" className="py-20 md:py-28" ref={ref}>
+    <section id="delivery" className="py-20 md:py-28 bg-white relative" ref={ref}>
       <div className="max-w-[1280px] mx-auto px-6">
-        <div className="text-center mb-14">
-          <h2 className={`text-4xl md:text-5xl font-display font-bold text-red transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-            Bouchées d&apos;Éloge
-          </h2>
-          <p className={`mt-3 text-text-muted text-lg max-w-xl mx-auto transition-all duration-700 delay-150 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-            Savourez les commentaires de nos clients à Houmt Souk Djerba.
-          </p>
-        </div>
-        {/* Review cards */}
-        <div className="relative flex items-center justify-center gap-6 overflow-hidden min-h-[350px]">
-          {REVIEWS.map((r, i) => {
-            const isActive = i === active;
-            const offset = i - active;
-            return (
-              <div
-                key={r.name}
-                className={`absolute md:relative w-[min(100%,380px)] rounded-3xl p-8 transition-all duration-500 shrink-0 ${
-                  isActive
-                    ? "bg-red text-white scale-100 opacity-100 z-10 shadow-xl"
-                    : "bg-cream-dark text-dark scale-90 opacity-50 z-0"
-                }`}
-                style={{ transform: `translateX(${offset * 120}%) scale(${isActive ? 1 : 0.9})` }}
-              >
-                {/* Stars */}
-                <div className="flex gap-1 mb-4">
-                  {[...Array(5)].map((_, j) => (
-                    <svg key={j} className={`w-5 h-5 ${isActive ? "text-white" : "text-gold"}`} viewBox="0 0 29 27" fill="currentColor"><path d="M13.238.708C13.59-.082 14.712-.082 15.065.708l3.272 7.34a1.12 1.12 0 00.808.588l7.992.843c.86.09 1.208 1.158.565 1.737l-5.97 5.38a1.12 1.12 0 00-.148.95l1.668 7.862c.18.846-.728 1.506-1.477 1.073l-6.962-4.015a1.12 1.12 0 00-1 0l-6.961 4.015c-.75.433-1.658-.227-1.478-1.073l1.667-7.862a1.12 1.12 0 00-.148-.95l-5.97-5.38c-.643-.58-.296-1.647.565-1.737l7.992-.843a1.12 1.12 0 00.808-.588L13.238.708z" /></svg>
-                  ))}
-                </div>
-                <p className={`text-base leading-relaxed mb-6 ${isActive ? "text-white/90" : "text-text-muted"}`}>{r.text}</p>
-                <p className={`font-display font-bold ${isActive ? "text-white" : "text-dark"}`}>{r.name}</p>
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="order-2 lg:order-1">
+            <h2 className={`text-4xl md:text-5xl font-display font-bold text-dark leading-tight transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+              Livraison Rapide, <br/><span className="text-accent-green">100% Écologique.</span>
+            </h2>
+            <p className={`mt-6 text-text-muted text-lg leading-relaxed transition-all duration-700 delay-150 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+              À Casa Presto, on ne fait pas que des pizzas incroyables. On pense aussi à notre belle île de Djerba. C&apos;est pourquoi nous assurons la <strong>livraison gratuite</strong> de vos commandes sur nos scooters électriques <em>Novago</em>, silencieux et respectueux de l&apos;environnement.
+            </p>
+            <ul className={`mt-8 space-y-4 transition-all duration-700 delay-300 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+              <li className="flex items-center gap-4 text-dark font-medium">
+                <span className="w-8 h-8 rounded-full bg-accent-green/10 flex items-center justify-center text-accent-green text-xl">🌱</span>
+                Zéro émission de CO2
+              </li>
+              <li className="flex items-center gap-4 text-dark font-medium">
+                <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xl">🛵</span>
+                Livraison rapide et silencieuse
+              </li>
+              <li className="flex items-center gap-4 text-dark font-medium">
+                <span className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xl">💸</span>
+                Livraison gratuite
+              </li>
+            </ul>
+            <div className={`mt-10 flex gap-6 items-center transition-all duration-700 delay-500 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+              <div className="text-3xl font-display font-black text-primary">☎ 75 655 169</div>
+              <div className="text-3xl font-display font-black text-primary">☎ 28 201 445</div>
+            </div>
+          </div>
+          <div className="order-1 lg:order-2">
+            <div className={`relative aspect-[3/4] md:aspect-square w-full rounded-3xl overflow-hidden shadow-2xl transition-all duration-1000 ${visible ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-95 -rotate-2"}`}>
+              <Image src="/delivery-scooter.jpg" alt="Scooter électrique Novago Casa Presto" fill className="object-cover" sizes="(max-width:1024px) 100vw, 50vw" />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent"></div>
+              <div className="absolute bottom-6 left-6 right-6 text-white">
+                <div className="bg-accent-green px-3 py-1 text-xs font-bold rounded-full uppercase inline-block mb-3">Green Delivery</div>
+                <h4 className="text-xl font-display font-bold">Livraison partout à Djerba</h4>
               </div>
-            );
-          })}
-        </div>
-        {/* Nav dots */}
-        <div className="flex justify-center gap-3 mt-8">
-          {REVIEWS.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setActive(i)}
-              className={`w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all ${
-                i === active ? "border-red bg-red text-white" : "border-text-muted/30 text-text-muted hover:border-red"
-              }`}
-              aria-label={`Review ${i + 1}`}
-            >
-              {i === active ? "›" : "›"}
-            </button>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function CTASection() {
-  return (
-    <section className="relative overflow-hidden">
-      <div className="relative aspect-[16/9] md:aspect-[21/9] bg-black">
-        <Image src="/pizza-slice.png" alt="Pizza Casa Presto Slices" fill className="object-cover blend-screen" sizes="100vw" />
-        <div className="absolute inset-0 bg-gradient-to-t from-red/80 via-red/20 to-transparent" />
-      </div>
-      {/* Marquee */}
-      <div className="bg-red py-4 overflow-hidden">
-        <div className="flex whitespace-nowrap" style={{ animation: "marquee-left 18s linear infinite" }}>
-          {[...Array(6)].map((_, i) => (
-            <span key={i} className="text-2xl md:text-3xl font-display font-bold uppercase text-white mx-6 shrink-0">
-              Pizza Casa Presto – Djerba Houmt Souk 🍕
-            </span>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Contact() {
-  const { ref, visible } = useReveal();
-  return (
-    <section id="contact" className="py-20 md:py-28 bg-dark text-white" ref={ref}>
-      <div className="max-w-[1280px] mx-auto px-6 grid lg:grid-cols-2 gap-12">
-        <div className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-          <span className="font-hand text-3xl text-gold">Livraison Rapide &amp; Emporter</span>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mt-2">Houmt Souk Djerba</h2>
-          <div className="mt-8 space-y-6">
-            {[
-              { icon: "📍", title: "Adresse", desc: "VVH7+H3H, Houmt Souk, Djerba, Tunisie" },
-              { icon: "🕐", title: "Horaires", desc: "Lundi — Dimanche • 11h00 – 23h00" },
-              { icon: "📞", title: "Téléphone", desc: "28 201 445", link: "tel:28201445" },
-            ].map((c) => (
-              <div key={c.title} className="flex gap-4 items-start">
-                <span className="text-2xl">{c.icon}</span>
-                <div>
-                  <h4 className="font-display font-bold">{c.title}</h4>
-                  {c.link ? (
-                    <a href={c.link} className="text-white/60 hover:text-gold transition-colors font-bold text-lg">{c.desc}</a>
-                  ) : (
-                    <p className="text-white/60">{c.desc}</p>
-                  )}
-                </div>
-              </div>
-            ))}
+            </div>
           </div>
         </div>
-        <div className={`rounded-3xl overflow-hidden border border-white/10 h-[350px] transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1646.611111111111!2d10.9685483!3d33.8174831!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13aabd70f532452b%3A0xadc053ace391adf1!2sCrousty%20Street%20Djerba!5e0!3m2!1sfr!2stn!4v1720000000000!5m2!1sfr!2stn"
-            width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" title="Pizza Casa Presto Djerba Location Map" />
+      </div>
+    </section>
+  );
+}
+
+function CTA() {
+  return (
+    <section className="relative py-24 overflow-hidden bg-dark">
+      <div className="absolute inset-0 opacity-40 mix-blend-overlay">
+        <Image src="/cta-burger-dramatic.png" alt="Appétissant" fill className="object-cover" />
+      </div>
+      <div className="relative z-10 max-w-[800px] mx-auto px-6 text-center">
+        <h2 className="text-5xl md:text-7xl font-display font-black text-white uppercase leading-none">
+          C&apos;est le moment <br /><span className="text-primary">de craquer.</span>
+        </h2>
+        <a href="#menu" className="btn-primary inline-flex px-12 py-5 text-sm mt-10">Commander Maintenant</a>
+      </div>
+      {/* Bottom marquee */}
+      <div className="absolute bottom-0 w-full bg-primary py-3 overflow-hidden">
+        <div className="flex whitespace-nowrap" style={{ animation: "marquee-left 15s linear infinite" }}>
+          {[...Array(10)].map((_, i) => (
+            <span key={i} className="text-white font-display font-bold text-lg uppercase mx-6 shrink-0 tracking-widest">
+              LIVRAISON GRATUITE ☎ 75 655 169
+            </span>
+          ))}
         </div>
       </div>
     </section>
@@ -440,50 +514,52 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="bg-dark-soft text-white border-t border-white/10">
-      <div className="max-w-[1280px] mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-3 gap-10">
+    <footer className="bg-dark text-white pt-20 pb-10">
+      <div className="max-w-[1280px] mx-auto px-6">
+        <div className="grid md:grid-cols-3 gap-12 border-b border-white/10 pb-16">
           <div>
-            <h3 className="font-display text-2xl font-bold italic text-red">Casa Presto</h3>
-            <p className="mt-3 text-white/50 text-sm leading-relaxed">
-              Des saveurs méditerranéennes, des garnitures généreuses et le meilleur de la pizza à Djerba. Pizza Casa Presto vous apporte une expérience inégalable à chaque part.
+            <div className="font-display text-3xl font-black text-primary italic mb-6">Casa Presto</div>
+            <p className="text-white/60 text-sm leading-relaxed max-w-sm">
+              La meilleure pizzeria de Djerba. Ingrédients frais, pâte artisanale et livraison écologique.
             </p>
           </div>
-          <div className="flex flex-col gap-2">
-            <h4 className="font-display font-bold uppercase text-sm tracking-widest mb-2">Navigation</h4>
-            {["Menu", "À Propos", "Avis", "Contact"].map((l) => (
-              <a key={l} href="#" className="text-white/50 hover:text-white text-sm transition-colors">{l}</a>
-            ))}
+          <div>
+            <h4 className="font-display font-bold text-lg mb-6">Menu</h4>
+            <div className="flex flex-col gap-3 text-white/60 text-sm">
+              <a href="#menu" className="hover:text-primary transition-colors">Pizzas Base Tomate</a>
+              <a href="#menu" className="hover:text-primary transition-colors">Pizzas Base Crème</a>
+              <a href="#menu" className="hover:text-primary transition-colors">Tex-Mex & Zapwich</a>
+              <a href="#menu" className="hover:text-primary transition-colors">Salades & Kid Box</a>
+            </div>
           </div>
-          <div className="flex flex-col gap-2">
-            <h4 className="font-display font-bold uppercase text-sm tracking-widest mb-2">Contact Direct</h4>
-            <p className="text-white/50 text-sm">📞 28 201 445</p>
+          <div>
+            <h4 className="font-display font-bold text-lg mb-6">Nous Contacter</h4>
+            <div className="flex flex-col gap-3 text-white/60 text-sm">
+              <p>📍 VVH7+H3H, Houmt Souk, Djerba</p>
+              <p>☎ 75 655 169</p>
+              <p>☎ 28 201 445</p>
+            </div>
           </div>
         </div>
-        <div className="mt-12 pt-8 border-t border-white/10 text-center text-xs text-white/30">
-          © {new Date().getFullYear()} Pizza Casa Presto Djerba. Les Meilleures Pizzas de Djerba 🇹🇳
+        <div className="pt-8 text-center text-white/40 text-sm">
+          © {new Date().getFullYear()} Pizza Casa Presto. Tous droits réservés.
         </div>
       </div>
     </footer>
   );
 }
 
-/* ─── PAGE ─── */
-export default function Home() {
+export default function Page() {
   return (
-    <>
+    <main className="bg-bg text-text selection:bg-primary selection:text-white">
       <Topbar />
       <Navbar />
       <Hero />
-      <About />
-      <MenuSection />
-      <ProductsSection />
-      <DifferenceSection />
-      <DropsSection />
-      <ReviewsSection />
-      <CTASection />
-      <Contact />
+      <MenuList />
+      <DropTagsSection />
+      <DeliverySection />
+      <CTA />
       <Footer />
-    </>
+    </main>
   );
 }

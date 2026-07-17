@@ -2,31 +2,31 @@
 @source "../";
 
 @theme inline {
-  --color-cream: #FEF3E8;
-  --color-cream-dark: #F5E6D3;
-  --color-red: #C41E24;
-  --color-red-dark: #9E1820;
-  --color-red-light: #E8353C;
-  --color-green: #2D6A4F;
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F9F9F9;
+  --color-primary: #F37021;
+  --color-primary-dark: #D15B17;
+  --color-primary-light: #F7945A;
+  --color-accent-green: #4CAF50;
   --color-gold: #D4A030;
   --color-dark: #1A1A1A;
   --color-dark-soft: #2D2D2D;
-  --color-text: #3D3028;
-  --color-text-muted: #7A6E62;
+  --color-text: #1A1A1A;
+  --color-text-muted: #666666;
   --font-display: "Poppins", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
   --font-hand: "Just Another Hand", cursive;
 }
 
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--color-cream); }
-::-webkit-scrollbar-thumb { background: var(--color-red); border-radius: 3px; }
-::selection { background: var(--color-red); color: white; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-primary); border-radius: 3px; }
+::selection { background: var(--color-primary); color: white; }
 
 @layer base {
   html { scroll-behavior: smooth; }
   body {
-    background-color: var(--color-cream);
+    background-color: var(--color-bg);
     color: var(--color-text);
     font-family: var(--font-body);
     overflow-x: hidden;
@@ -50,7 +50,7 @@
 /* ── Button hover fill ── */
 .btn-primary {
   position: relative; overflow: hidden;
-  background-color: var(--color-red); color: white;
+  background-color: var(--color-primary); color: white;
   font-family: var(--font-display); font-weight: 600;
   text-transform: uppercase; letter-spacing: 0.08em;
   border-radius: 9999px; transition: color 0.35s ease; z-index: 1;
@@ -65,21 +65,21 @@
 
 .btn-outline {
   position: relative; overflow: hidden;
-  border: 2px solid var(--color-red); color: var(--color-red);
+  border: 2px solid var(--color-primary); color: var(--color-primary);
   font-family: var(--font-display); font-weight: 600;
   text-transform: uppercase; letter-spacing: 0.08em;
   border-radius: 9999px; transition: color 0.35s ease; z-index: 1;
 }
 .btn-outline::before {
   content: ""; position: absolute; inset: 0;
-  background: var(--color-red); border-radius: 9999px;
+  background: var(--color-primary); border-radius: 9999px;
   transform: scaleX(0); transform-origin: right;
   transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1); z-index: -1;
 }
 .btn-outline:hover { color: white; }
 .btn-outline:hover::before { transform: scaleX(1); transform-origin: left; }
 
-.text-stroke-red {
-  -webkit-text-stroke: 2px var(--color-red);
+.text-stroke-primary {
+  -webkit-text-stroke: 2px var(--color-primary);
   -webkit-text-fill-color: transparent;
 }
