@@ -271,9 +271,32 @@ function PizzaCard({ pizza }: { pizza: { name: string, desc: string, p: number[]
   // Find matching local image
   const getImage = (name: string) => {
     const n = name.toLowerCase();
-    if (n.includes("margherita") || n.includes("marguerita")) return "/pizza-margherita.png";
-    if (n.includes("barbecue")) return "/pizza-bbq.png";
-    if (n.includes("casa")) return "/pizza-del-casa.png";
+    
+    // Exact generated matches in public/menu/
+    if (n.includes("marguerita") || n.includes("margherita")) return "/menu/pizza-marguerita.jpg";
+    if (n.includes("reine")) return "/menu/pizza-reine.jpg";
+    if (n.includes("campione")) return "/menu/pizza-campione.jpg";
+    if (n.includes("4 fromages")) return "/menu/pizza-4fromages.jpg";
+    if (n.includes("calzone")) return "/menu/pizza-calzone.jpg";
+    if (n.includes("neptune")) return "/menu/pizza-neptune.jpg";
+    if (n.includes("barbecue")) return "/menu/pizza-barbecue.jpg";
+    if (n.includes("orientale")) return "/menu/pizza-orientale.jpg";
+    if (n.includes("pépé originale") || n.includes("pepe originale")) return "/menu/pizza-pepe-originale.jpg";
+    if (n.includes("tunisienne")) return "/menu/pizza-la-tunisienne.jpg";
+    if (n.includes("hawaïenne") || n.includes("hawaienne")) return "/menu/pizza-hawaienne.jpg";
+    if (n.includes("fruit de mer")) return "/menu/pizza-fruit-de-mer.jpg";
+    if (n.includes("4 saisons")) return "/menu/pizza-4saisons.jpg";
+
+    // Fallbacks for remaining base tomate (quota exceeded)
+    if (n.includes("casa")) return "/menu/pizza-campione.jpg"; // beef/chicken/merguez
+    if (n.includes("chicken")) return "/menu/pizza-barbecue.jpg"; // poultry fallback
+
+    // Fallbacks for base creme (quota exceeded)
+    if (n.includes("venezia")) return "/menu/pizza-fruit-de-mer.jpg"; // salmon -> seafood fallback
+    if (n.includes("rimini")) return "/menu/pizza-campione.jpg";
+    if (n.includes("chèvre miel") || n.includes("chevre miel")) return "/menu/pizza-4fromages.jpg";
+    if (n.includes("boursin")) return "/menu/pizza-campione.jpg";
+
     return "/pizza-slice.png";
   };
 
