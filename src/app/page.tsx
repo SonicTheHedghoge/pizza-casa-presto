@@ -1089,9 +1089,9 @@ function CartDrawer({
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-1">Adresse de livraison *</label>
-                <textarea
+                <input
+                  type="text"
                   required
-                  rows={2}
                   placeholder="Ex: Houmt Souk, en face de l'hôtel X..."
                   value={customer.address}
                   onChange={(e) => setCustomer({ ...customer, address: e.target.value })}
